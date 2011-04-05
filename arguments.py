@@ -1,7 +1,8 @@
 import wx
+import layouts
 
 constructors = {}
-constructors['str'] = ["wx.TextCtrl(self.parent, -1), %s"]
+constructors['str'] = ["wx.TextCtrl(self.parent, -1, %s)"]
 constructors['int'] = ["wx.SpintCtrl(self.parent, -1, str(%s))"]
 constructors['float'] = ["wx.FloatCtrl(self.parent, -1, %s)"]
 constructors['list'] = ["ListItems(self.parent, %s)"]
@@ -132,7 +133,7 @@ class ArgWidget(wx.GridBagSizer):
 			self.items.append(item)	
 		
 	def layout():
-		pass
+		layouts.LayoutGrid(self)
 
 	def read(self):
 		"""get the value of the argument according to the GUI components"""
