@@ -21,27 +21,41 @@ class Arguments:
 	argwidgets - list of ArgWidget objects
 	parent - parent function or class
 	"""
-	def __init__(self, argwidgets = [], parent=None):
+	def __init__(self, widgets = [], parent=None):
 		self.parent = parent
-		self.argwidgets = argwidgets
+		self.widgets = widgets
 	
-	def add(self, argwidget):
-		self.argwidgets.append(argwidget)
+	def append(self, widget):
+		self.widgets.append(widget)
 
 	def find(self, ID):
 		for w in self.widgets:
 			if str(ID) in w.children.keys():
 				return w.children[str(ID)]
-		
+
 		return None
+		
+	def names(self):
+		names = []
+		for w in self.widgets:
+			names.append(w.name)
+		return names
+
+	def index(self, name):
+		index = -1
+		for w in self.widgets:
+			index += 1
+			if name == w.name:
+				return index
+
+		return index
 
 class ArgWidget(wx.GridBagSizer):
-	"""
-	name = name of the argument
-	value = value, if any (otherwise None)
-	parent = the class that this arg belongs to
-	"""
-	def __init__(self, name, value, ids= {}, parent = None, *args, **kwargs):
+	def __init__(self, name, value, parent = None, *args, **kwargs):
+		"""name = name of the argument
+		value = value, if any (otherwise None)
+		parent = the class that this arg belongs to
+		"""
 
 		wx.GridBagSizer.__init__(self, *args, **kwargs)
 
