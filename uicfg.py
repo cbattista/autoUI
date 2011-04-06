@@ -15,44 +15,13 @@ constructors['NoneType'] = ["wx.TextCtrl(self.parent, -1)",
 constructors['instance'] = ["ClassItems(%s)"] 
 
 values = {}
-values['str'] = "items[1].GetValue()"
-values['int'] = "int(items[1].GetValue())"
-values['float'] = "items[1].GetFloat()"
-values['list'] = "ReadList(items[1:-1])"
-values['bool'] = "items[1].GetValue()"
-values['dict'] = "ReadDict(items[1:-1])"
-values['NoneType'] = "ReadCode(items[1])"
-values['instance'] = "ReadClassItems(items[1], items[2])"
-
-def ClassItems(value):
-	"""code constructor for a class/instance"""
-	if str(type(value)) == "<type 'instance'>":
-		c = value.__class__
-		i = value
-	else:
-		c = value
-		i = None
-
-	items = []
-
-	items.append("wx.StaticText(self.parent, -1, str(%s)" % c)
-	items.append("wx.StaticText(self.parent, -1, str(%s)" % i)
-	items.append("wx.Button(self.parent, -1, 'Edit')")
-
-	return items
+values['str'] = "items[0].GetValue()"
+values['int'] = "int(items[0].GetValue())"
+values['float'] = "items[0].GetFloat()"
+values['list'] = "ReadList(items)"
+values['bool'] = "items[0].GetValue()"
+values['dict'] = "ReadDict(items)"
+values['NoneType'] = "ReadCode(items[0])"
+values['instance'] = "ReadClassItems(items[0], items[1])"
 
 
-def ReadClassItems(c, i):
-	#get the value of the text ctrls of class and instance
-	c = c.GetValue()
-	i = i.GetValue()
-
-	#evaluate the values (i.e., generate class and instance)
-	c = eval(c)
-	i = eval(i)
-
-	#if there is an instance, use that, otherwise use the class obj	
-	if i:
-		return i
-	else:
-		return c
