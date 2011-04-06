@@ -17,6 +17,9 @@ from wxmacros import *
 
 class ValWidget(wx.GridBagSizer):
 	def __init__(self, value, parent = None, *args, **kwargs):
+		"""value = the value to be displayed/ctrl
+		parent = the class that this value belongs to
+		"""
 		wx.GridBagSizer.__init__(self, *args, **kwargs)
 		
 		self.value = value
