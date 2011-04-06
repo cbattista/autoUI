@@ -19,20 +19,24 @@ from wxmacros import *
 class ClassWidget(wx.GridBagSizer):
 	def __init__(self, target, parent=None, *args, **kwargs):
 		wx.GridBagSizer.__init__(self, *args, **kwargs)
+		
 		self.parent = parent
-
 		self.target = target
 
-		self.instance = None 
+		self.construct()
 
-		self.args = inspect.getargspec(self.target.__init__)
 
-		self.argnames = self.args=[0]
+	def construct(self):
+		"""create the widgets and put them in 
+		the appropriate collection"""
 
+
+		#get args and their default values
+		args = inspect.getargspec(self.target.__init__)
+		self.argnames = args[0]
 		self.argnames.remove('self')
 
 		self.defaults = ()
-
 		self.defaults = self.args[3]
 
 		if self.argnames:
@@ -45,26 +49,24 @@ class ClassWidget(wx.GridBagSizer):
 			self.nondefaults = 0
 
 
-		self.construct()
-
-	def construct(self):
-		"""create the widgets and put them in 
-		the appropriate collection"""
-
+		#collections...
 		#list of arguments (which have their IDs searchable by .find())
 		self.args = Arguments()
 		self.methods = Methods()
-
 		#control items (buttons etc)
 		self.controls = {}
 		#all the items		
 		self.items = []
-
-
 		#init button
 		self.init = wx.Button(self.parent, -1, 'Init')
 		self.controls[str(self.init.GetId())] = self.init	
 
+		#if this thing has a parent we need a 'return button'
+		if self.parent:
+			self.done = wx.Button(self.parent, -1, 'Return')
+			self.controls[str(self.done.GetId())] = self.done
+
+		#widgets...
 		#create the arguments
 		for a, d in (self.argnames, self.defaults):
 			item = ArgWidget(a, d, self.parent)
@@ -73,19 +75,15 @@ class ClassWidget(wx.GridBagSizer):
 
 		self.items.append(self.init)	
 
-		#also need methods
+		#and then the methods
 		for f in inspect.getmembers(self.target):
 			#if this is a user defined, public function, create a frame for its arguments
 			if inspect.isbuiltin(f[0]) or f[0].startswith('_'):
 				pass
 			else:
-				b_id += 1
-				self.functions.append(f[1])
-				button = wx.Button(self.parent, b_id, f[0])
-				button.Disable()
-				self.buttons.append(button)
-				functionFrame = objSizer(self.parent, f[1], recurse=False)
-				self.items['methods'].append(functionFrame)
+				item = f[1]
+				item = MethWidget(item)  #hehehe
+				self.methods.append(item)
 		
 	def setDefault(self, value, arg):
 		"""sets a default value for a given arg"""
@@ -99,5 +97,17 @@ class ClassWidget(wx.GridBagSizer):
 		"""layout the items in the sizer"""
 		layouts.LayoutGrid(self)
 
-	def onButton(self):
-		for
+	def onButton(self, event):
+		ID = event.GetId()
+		if self.controls.has_key(str(ID)):
+			btn = self.controls[str(ID)]
+			label = btn.GetLabel()
+			exec(events[label])
+
+	def Initialize(self):
+		pass
+
+	def Return(self):
+		pass
+
+	

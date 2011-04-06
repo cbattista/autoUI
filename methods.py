@@ -15,6 +15,7 @@ import layouts
 from values import *
 from uicfg import *
 from wxmacros import *
+from arguments import *
 
 class Methods:
 	def __init__(self, methods = [], parent=None):
@@ -42,4 +43,47 @@ class MethWidget(wx.GridBagSizer):
 	"""Yeah I have to admit here that I could just as easily be calling 
 	this "MethodWidget" but I think using the word "Meth" is funny
 	"""
-	wx.GridBagSizer.__init__(self, *args, **kwargs)
+	
+	def __init__(self, name, method, parent=None, *args, **kwargs):
+		wx.GridBagSizer.__init__(self, *args, **kwargs)
+		self.method = method
+		self.parent = parent
+		self.name = name
+
+		
+	def construct(self):
+		"""make the widgets for the args
+		and put them into the appropriate collections
+		"""
+
+		#collections
+		self.items = []
+		self.construct()
+		self.args = Arguments()
+		self.controls = {}
+
+		run = wx.Button(self.parent, -1, self.name).Disable()
+		self.items.append(run)
+		self.controls[str(run.GetId())] = run
+
+		#widgets...
+		#create the arguments
+		for a, d in (self.argnames, self.defaults):
+			item = ArgWidget(a, d, self.parent)
+			self.args.append(item)
+			self.items.append(item)
+
+		self.items.append(self.init)	
+
+	def layout():
+		"""layout the items in the sizer"""
+		layouts.LayoutGrid(self)
+
+	def setDefault(self, value, arg):
+		"""sets a default value for a given arg"""
+		index = self.args.index(arg)
+		defaults = list(self.defaults)
+		defaults[index] = value
+		defaults = tuple(defaults)
+		self.defaults = defaults
+	
