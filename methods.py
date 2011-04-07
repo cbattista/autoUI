@@ -16,6 +16,7 @@ from values import *
 from uicfg import *
 from wxmacros import *
 from arguments import *
+from Items import *
 
 class MethItems(CMGrid):
 	"""Yeah I have to admit here that I could just as easily be calling 
@@ -44,11 +45,7 @@ class MethItems(CMGrid):
 		self.items[-1].Disable()
 
 		#widgets...
-		#create the arguments
-		for a, d in (self.argnames, self.defaults):
-			item = ArgItem(a, d, self.parent)
-			self.args.append(item)
-			self.items.append(item)
+		self.constructArgs()
 
 		self.items.append(self.init)
 	

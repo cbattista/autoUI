@@ -123,16 +123,3 @@ class CMGrid(ItemGrid):
 
 		return values
 
-	def initialize(self):
-		"""create an instance of the target class (as self.obj)	from values provided in the gui
-		"""
-		values = self.deconstruct()
-		#now create an object from the values
-		argString = "self.target("
-		for a in self.argnames:
-			argString += "%s=values[%s]," % (a, self.argnames.index(a))
-		argString = argString.rstrip(",")
-		argString += ")"
-		
-		self.obj = eval(argString)
-
