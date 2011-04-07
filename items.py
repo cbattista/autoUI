@@ -90,8 +90,49 @@ class CMGrid(ItemGrid):
 		self.defaults = defaults
 
 	def constructArgs(self):
+		self.args = []
 		for a, d in (self.argnames, self.defaults):
 			item = ArgWidget(a, d, self.parent)
 			self.args.append(item)
 			self.items.append(item)
 		
+	def deconstruct(self):
+		"""get the values for each of the fields"""
+		values = []
+		for item in self.args:
+			value = item.read()
+			value = value[1]
+			#check if it's a string that wants to be a dict
+			if type(value) == list:
+				isDict = False
+				v = value[0]
+				if type(v) == list:
+					if len(v) == 2:
+						if v[0].startswith('{'):
+							isDict = True
+
+				if isDict:
+					d = {}
+					for v in value:
+						key = v[0].lstrip('{')
+						val = v[1]
+						d[key] = val
+					value = d 
+
+			values.append(value)
+
+		return values
+
+	def initialize(self):
+		"""create an instance of the target class (as self.obj)	from values provided in the gui
+		"""
+		values = self.deconstruct()
+		#now create an object from the values
+		argString = "self.target("
+		for a in self.argnames:
+			argString += "%s=values[%s]," % (a, self.argnames.index(a))
+		argString = argString.rstrip(",")
+		argString += ")"
+		
+		self.obj = eval(argString)
+
