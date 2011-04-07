@@ -26,7 +26,7 @@ values['instance'] = "ReadClassItems(items[0], items[1])"
 
 events['Initialize'] = "self.run()"
 events['Return'] = "self.rtrn()"
-events['Edit'] = ""
+events['Class Edit'] = "self.edit()"
 events['Eval'] = ""
 events['Exec'] = ""
 events['ListEdit'] = ""

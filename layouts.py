@@ -22,3 +22,13 @@ def LayoutGrid(sizer, posFunc=GoldenRatio):
 			index+=1
 
 	return r, c
+
+def AddBar(sizer, items):
+	r = sizer.GetRows()
+	c = sizer.GetCols()
+
+	for i in items:
+		r+= 1
+		sizer.SetRows(r)
+		sizer.Add(i, [r, 0], span=[1, c])
+

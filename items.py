@@ -5,6 +5,10 @@ from arguments import *
 class Item:
 	def __init__(self, items = [], parent=None):
 		self.items = items
+		self.current = 0
+
+	def __iter__():	
+		return self
 
 	def append(self, item):
 		self.items.append(item)
@@ -14,6 +18,12 @@ class Item:
 		for i in self.items:
 			names.append(i.name)
 		return names
+
+	def next(self):
+		if len(self.items) > self.current:
+			return self.items[current]
+		else:
+			raise StopIteration
 
 	def index(self.method):
 		index = -1

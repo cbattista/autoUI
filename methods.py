@@ -27,7 +27,6 @@ class MethItem(CMGrid):
 
 		args = inspect.getargspec(method)
 		self.argnames = args[0]
-
 		
 	def construct(self):
 		"""make the widgets for the args
@@ -41,13 +40,9 @@ class MethItem(CMGrid):
 
 		#make the button
 		self.btn = self.makeButton(self.name)	
-		#disable it (it's the last thing we put in self.items)
-		self.items[-1].Disable()
 
-		#widgets...
+		self.readArgs(self.item)
 		self.constructArgs()
-
-		self.items.append(self.init)
 
 		self.layout()
 	

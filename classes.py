@@ -35,14 +35,13 @@ class ClassItem(CMGrid):
 			self.rtrn = self.makeButton('Return')
 
 		#get args and their default values
-		self.readArgs(self.target.__init__)
+		self.readArgs(self.item.__init__)
 
 		#construct the args
 		self.constructArgs()	
 
 		#before we move on, let's toss what we have into a nice rectangle
-		r, c = self.layout()
-
+		self.layout()
 
 		self.methods = Items() #ItemList of methods
 
@@ -57,11 +56,8 @@ class ClassItem(CMGrid):
 				self.buttons.append(item.btn)
 				self.methods.append(item)
 
-		self.layoutmethods()
-
-
-	def layoutMethods(self):
-
+		#add the methods to the sizer
+		layouts.AddBar(self, self.methods)
 
 
 	def initialize(self):

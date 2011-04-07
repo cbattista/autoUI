@@ -32,10 +32,16 @@ class ArgItem(ItemGrid):
 		val_item = ValItem(self.parent, self.item)
 		self.value = val_item
 		self.items.append(val_item)
-		self.controls = dict(self.controls, **item.controls)
+		self.controls = dict(self.controls, **val_item.controls)
 		self.layout()
+		self.panel.Bind(wx.EVT_BUTTON, self.onButton)
 		
 	def read(self):
 		"""return the name and value of this argument"""
 		value = self.value.read()
 		return name, value
+
+	def edit(self):
+		frame = wx.Frame(self.parent, -1)
+		classItem = ClassItem(self.item)
+		frame.SetSizerAndFit(classItem)
