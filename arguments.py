@@ -16,7 +16,7 @@ from values import *
 from uicfg import *
 from wxmacros import *
 
-class ArgWidget(ItemGrid):
+class ArgItem(ItemGrid):
 	def __init__(self, name, value, parent = None, *args, **kwargs):
 		"""name = name of the argument
 		value = value, if any (otherwise None)
@@ -37,8 +37,9 @@ class ArgWidget(ItemGrid):
 
 		"""build argwidget contents"""
 		self.makeLabel()
-		item = ValWidget(self.parent, value)
-		self.items.append(item)
+		val_item = ValItem(self.parent, self.item)
+		self.value = val_item
+		self.items.append(val_item)
 		self.controls = dict(self.controls, **item.controls)
 		
 	def read(self):

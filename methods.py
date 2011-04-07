@@ -17,12 +17,16 @@ from uicfg import *
 from wxmacros import *
 from arguments import *
 
-class MethWidget(CMGrid):
+class MethItems(CMGrid):
 	"""Yeah I have to admit here that I could just as easily be calling 
-	this "MethodWidget" but I think using the word "Meth" is funny
+	this "MethodItem" but I think using the word "Meth" is funny
 	"""
 	def __init__(self, name, method, parent=None, *args, **kwargs):
 		ItemGrid.__init__(self, name, method, parent, *args, **kwargs)
+
+		args = inspect.getargspec(method)
+		self.argnames = args[0]
+
 		
 	def construct(self):
 		"""make the widgets for the args
@@ -42,7 +46,7 @@ class MethWidget(CMGrid):
 		#widgets...
 		#create the arguments
 		for a, d in (self.argnames, self.defaults):
-			item = ArgWidget(a, d, self.parent)
+			item = ArgItem(a, d, self.parent)
 			self.args.append(item)
 			self.items.append(item)
 

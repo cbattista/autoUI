@@ -1,5 +1,6 @@
 import wx
 import layouts
+from arguments import *
 
 class Item:
 	def __init__(self, items = [], parent=None):
@@ -77,7 +78,8 @@ class ItemGrid(wx.GridBagSizer):
 class CMGrid(ItemGrid):
 	def __init__(self, name, value, parent=None, *args, **kwargs):
 		ItemGrid.__init__(self, name, method, parent, *args, **kwargs)
-
+		self.argnames = []
+		self.defaults = ()
 
 	def setDefault(self, value, arg):
 		"""sets a default value for a given arg"""
@@ -86,4 +88,10 @@ class CMGrid(ItemGrid):
 		defaults[index] = value
 		defaults = tuple(defaults)
 		self.defaults = defaults
+
+	def constructArgs(self):
+		for a, d in (self.argnames, self.defaults):
+			item = ArgWidget(a, d, self.parent)
+			self.args.append(item)
+			self.items.append(item)
 		

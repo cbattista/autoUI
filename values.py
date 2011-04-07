@@ -15,26 +15,22 @@ import layouts
 from uicfg import *
 from wxmacros import *
 
-class ValWidget(ItemGrid):
+class ValItem(ItemGrid):
 	def __init__(self, value, parent = None, *args, **kwargs):
 		"""value = the value to be displayed/ctrl
 		parent = the class that this value belongs to
 		"""
 		ItemGrid.__init__(self, "", value, parent, *args, **kwargs)
 		
-	def addControl(self, ctrl)
-		"""create a text ctrl, add it to children"""
-		self.controls[str(ctrl.GetId())] = ctrl
-
 	def construct(self):
 		self.items = []
 		self.controls = {}
 
 		"""construct the widget with components indicated in the components table"""
-		valtype = str(type(self.item)).split("'")[1]
+		self.valtype = str(type(self.item)).split("'")[1]
 
-		if constructors.has_key(valtype):
-			components = constructors[valtype]
+		if constructors.has_key(self.valtype):
+			components = constructors[self.valtype]
 		else:
 			components = constructors['instance']
 
@@ -50,8 +46,8 @@ class ValWidget(ItemGrid):
 			self.items.append(i)	
 		
 	def read(self):
-		"""return the value held in this ValWidget"""
-		value = values[str(type(self.item)).split("'")[1]]
+		"""return the value held in this ValItem"""
+		value = values[self.valtype]
 		value = eval(value)
 		return value
 

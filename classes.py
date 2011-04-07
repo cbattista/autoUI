@@ -16,7 +16,7 @@ from values import *
 from uicfg import *
 from wxmacros import *
 
-class ClassWidget(CMGrid):
+class ClassItem(CMGrid):
 	def __init__(self, target, parent=None, *args, **kwargs):
 		CMGrid.__init__(self, "", target, parent, *args, **kwargs)
 
@@ -60,14 +60,8 @@ class ClassWidget(CMGrid):
 			self.done = wx.Button(self.parent, -1, 'Return')
 			self.controls[str(self.done.GetId())] = self.done
 
-		#widgets...
-		#create the arguments
-		for a, d in (self.argnames, self.defaults):
-			item = ArgWidget(a, d, self.parent)
-			self.args.append(item)
-			self.items.append(item)
-
-		self.items.append(self.init)	
+		#construct the args now
+		self.constructArgs()	
 
 		#and then the methods
 		for f in inspect.getmembers(self.target):
