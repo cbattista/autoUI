@@ -20,3 +20,5 @@ def LayoutGrid(sizer, posFunc=GoldenRatio):
 			item = items[index] 
 			sizer.Add(item, [r,c])
 			index+=1
+
+	return r, c

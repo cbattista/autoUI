@@ -47,6 +47,8 @@ class ValItem(ItemGrid):
 
 		if self.controls:
 			self.parent.Bind(wx.EVT_BUTTON, self.onButton)
+
+		self.layout()
 				
 		
 	def read(self):

@@ -34,7 +34,6 @@ class ItemGrid(wx.GridBagSizer):
 		
 		self.panel = wx.Panel(parent, -1)
 		self.construct()
-		self.layout()
 		self.panel.SetSizerAndFit(self)
 
 	def construct(self):
@@ -42,7 +41,8 @@ class ItemGrid(wx.GridBagSizer):
 		self.controls = {}
 
 	def layout(self):
-		layouts.LayoutGrid(self)
+		r, c = layouts.LayoutGrid(self)
+		return r, c
 
 	def bind(self, event, function):
 		self.panel.Bind(event, function)

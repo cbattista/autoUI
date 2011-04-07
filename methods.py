@@ -49,4 +49,5 @@ class MethItem(CMGrid):
 
 		self.items.append(self.init)
 
+		self.layout()
 	

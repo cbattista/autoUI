@@ -22,25 +22,18 @@ class ArgItem(ItemGrid):
 		value = value, if any (otherwise None)
 		parent = the class that this arg belongs to
 		"""
-
 		ItemGrid.__init__(self, name, value, parent, *args, **kwargs)
-
-		#controls = dictionary of the ids of different control components
-		self.controls = {}
-		#items that the sizer will be sizing in list form
-		self.items = []		
-		self.construct()
 
 	def construct(self):
 		self.items = []
 		self.controls = {}
-
 		"""build argwidget contents"""
 		self.makeLabel()
 		val_item = ValItem(self.parent, self.item)
 		self.value = val_item
 		self.items.append(val_item)
 		self.controls = dict(self.controls, **item.controls)
+		self.layout()
 		
 	def read(self):
 		"""return the name and value of this argument"""

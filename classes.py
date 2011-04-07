@@ -40,6 +40,10 @@ class ClassItem(CMGrid):
 		#construct the args
 		self.constructArgs()	
 
+		#before we move on, let's toss what we have into a nice rectangle
+		r, c = self.layout()
+
+
 		self.methods = Items() #ItemList of methods
 
 		#and then the methods
@@ -52,6 +56,12 @@ class ClassItem(CMGrid):
 				item = MethItem(item)  #hehehe
 				self.buttons.append(item.btn)
 				self.methods.append(item)
+
+		self.layoutmethods()
+
+
+	def layoutMethods(self):
+
 
 
 	def initialize(self):
