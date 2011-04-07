@@ -45,4 +45,7 @@ class MethItem(CMGrid):
 		self.constructArgs()
 
 		self.layout()
+
+	def layout(self):
+		layouts.LayoutGrid("Bar")
 	

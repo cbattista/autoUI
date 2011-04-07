@@ -8,8 +8,14 @@ def GoldenRatio(items):
 	r = numitems - c
 	return r, c
 
-def LayoutGrid(sizer, posFunc=GoldenRatio):
-	r, c = posFunc(sizer.items)
+def Bar(items):
+	return 1, len(items)
+
+def Pole(items):
+	return len(items), 1
+
+def LayoutGrid(sizer, posFunc="GoldenRatio"):
+	r, c = eval("%s(sizer.items)" % posFunc)
 
 	sizer.SetRows(r)
 	sizer.SetCols(c)
