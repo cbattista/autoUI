@@ -14,6 +14,7 @@ import wx
 import layouts
 from uicfg import *
 from wxmacros import *
+from items import *
 
 class ValItem(ItemGrid):
 	def __init__(self, value, parent = None, *args, **kwargs):
@@ -46,7 +47,7 @@ class ValItem(ItemGrid):
 			self.items.append(i)
 
 		if self.controls:
-			self.parent.Bind(wx.EVT_BUTTON, self.onButton)
+			self.bind(wx.EVT_BUTTON, self.onButton)
 
 		self.layout()
 				

@@ -16,7 +16,7 @@ from values import *
 from uicfg import *
 from wxmacros import *
 from arguments import *
-from Items import *
+from items import *
 
 class MethItem(CMGrid):
 	"""Yeah I have to admit here that I could just as easily be calling 

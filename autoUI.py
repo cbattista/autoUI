@@ -12,16 +12,21 @@ You should have received a copy of the GNU General Public License along with thi
 
 import wx
 from classes import *
+import testobj
+import inspect
 
 class autoUI:
 	def __init__(self, target, parent = None):
-		self.app = wx.App(False):
+		self.app = wx.App(False)
 
 		frame = wx.Frame(None)
 		if inspect.isclass(target):
 			sizer = ClassItem(target, None)
-		elif inspect.ismethod(target):
+		elif inspect.ismethod(target) or inspect.isfunction(target):
 			sizer = MethItem("", target)
+		elif isinstance(target):
+			sizer = ClassItem(target.__class__, None)
+			#hm yeah gotta do something about the 'instance' variables
 
 		self.frame.SetSizerAndFit(sizer)
 		frame.Show()
@@ -31,7 +36,7 @@ class autoUI:
 
 
 def main():
-	auto = autoUI()
+	auto = autoUI(testobj.TestObj)
 	auto.go()
 
 if __name__ == '__main__':

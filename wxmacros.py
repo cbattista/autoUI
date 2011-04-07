@@ -11,7 +11,7 @@ You should have received a copy of the GNU General Public License along with thi
 """
 
 import wx
-from values import ValWidget
+import values
 
 def ClassItems(value):
 	"""code constructor for a class/instance"""
@@ -50,7 +50,7 @@ def ListItems(the_list):
 	items = []
 
 	for l in the_list:
-		item = ValWidget(l)
+		item = values.ValItem(l)
 		items.append(item)
 
 	items.append("wx.Button(self.parent, -1, 'List Edit')")

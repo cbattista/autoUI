@@ -12,9 +12,12 @@ You should have received a copy of the GNU General Public License along with thi
 
 import wx
 import layouts
+from items import *
 from values import *
 from uicfg import *
 from wxmacros import *
+
+
 
 class ArgItem(ItemGrid):
 	def __init__(self, name, value, parent = None, *args, **kwargs):
@@ -28,7 +31,7 @@ class ArgItem(ItemGrid):
 		self.items = []
 		self.controls = {}
 		"""build argwidget contents"""
-		self.makeLabel()
+		self.makeLabel(self.name)
 		val_item = ValItem(self.parent, self.item)
 		self.value = val_item
 		self.items.append(val_item)
