@@ -18,7 +18,7 @@ from wxmacros import *
 from arguments import *
 from Items import *
 
-class MethItems(CMGrid):
+class MethItem(CMGrid):
 	"""Yeah I have to admit here that I could just as easily be calling 
 	this "MethodItem" but I think using the word "Meth" is funny
 	"""
@@ -40,7 +40,7 @@ class MethItems(CMGrid):
 		self.controls = {}
 
 		#make the button
-		self.makeButton(self.name)	
+		self.btn = self.makeButton(self.name)	
 		#disable it (it's the last thing we put in self.items)
 		self.items[-1].Disable()
 
@@ -48,4 +48,5 @@ class MethItems(CMGrid):
 		self.constructArgs()
 
 		self.items.append(self.init)
+
 	

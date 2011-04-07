@@ -34,6 +34,7 @@ class ItemGrid(wx.GridBagSizer):
 		
 		self.panel = wx.Panel(parent, -1)
 		self.construct()
+		self.layout()
 		self.panel.SetSizerAndFit(self)
 
 	def construct(self):
@@ -49,11 +50,13 @@ class ItemGrid(wx.GridBagSizer):
 	def makeLabel(self, label):
 		txt = wx.StaticText(self.parent, -1, label)
 		self.items.add(txt)
+		return txt
 
 	def makeButton(self, label):
 		btn = wx.Button(self.parent, -1, label)
 		self.items.add(btn)
 		self.addControl(btn)
+		return btn
 
 	def addControl(self, ctrl)
 		"""create a ctrl, add it to children"""
@@ -62,7 +65,8 @@ class ItemGrid(wx.GridBagSizer):
 	def makeTxtCtrl(self, label=""):
 		txtctrl = wx.TextCtrl(self.parent, -1, label)
 		self.items.add(txtctrl)
-		self.addControl(btn)
+		self.addControl(txtctrl)
+		return txtctrl
 
 	def onButton(self, event):
 		ID = event.GetId()
@@ -89,8 +93,25 @@ class CMGrid(ItemGrid):
 		defaults = tuple(defaults)
 		self.defaults = defaults
 
+	def readArgs(self, function):
+		args = inspect.getargspec(function)
+		self.argnames = args[0]
+		self.argnames.remove('self')
+
+		self.defaults = ()
+		self.defaults = self.args[3]
+
+		if self.argnames:
+			self.nondefaults = len(self.argnames) - len(self.defaults)
+			while len(self.defaults) != len(self.argnames):
+				d = list(self.defaults)
+				d.insert(0, None)
+				self.defaults = tuple(d)
+		else:
+			self.nondefaults = 0
+
 	def constructArgs(self):
-		self.args = []
+		self.args = Items
 		for a, d in (self.argnames, self.defaults):
 			item = ArgWidget(a, d, self.parent)
 			self.args.append(item)
@@ -124,7 +145,7 @@ class CMGrid(ItemGrid):
 		return values
 
 	def run(self):
-		"""create an instance of the target class (as self.obj)	from values provided in the gui
+		"""run the function method (could be a class' init method)
 		"""
 		values = self.deconstruct()
 		#now create an object from the values
@@ -134,4 +155,4 @@ class CMGrid(ItemGrid):
 		argString = argString.rstrip(",")
 		argString += ")"
 		
-		self.obj = eval(argString)
+		self.result = eval(argString)

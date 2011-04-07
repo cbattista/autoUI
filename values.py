@@ -43,7 +43,11 @@ class ValItem(ItemGrid):
 			if isinstance(i, wx.Control):
 				self.addControl(i)
 
-			self.items.append(i)	
+			self.items.append(i)
+
+		if self.controls:
+			self.parent.Bind(wx.EVT_BUTTON, self.onButton)
+				
 		
 	def read(self):
 		"""return the value held in this ValItem"""

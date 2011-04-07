@@ -23,45 +23,24 @@ class ClassItem(CMGrid):
 	def construct(self):
 		"""create the widgets and put them in 
 		the appropriate collection"""
-		self.items = []
-		self.controls = {}
 
-		#get args and their default values
-		args = inspect.getargspec(self.target.__init__)
-		self.argnames = args[0]
-		self.argnames.remove('self')
+		self.items = [] # items for the sizer
+		self.controls = {} # control items
 
-		self.defaults = ()
-		self.defaults = self.args[3]
-
-		if self.argnames:
-			self.nondefaults = len(self.argnames) - len(self.defaults)
-			while len(self.defaults) != len(self.argnames):
-				d = list(self.defaults)
-				d.insert(0, None)
-				self.defaults = tuple(d)
-		else:
-			self.nondefaults = 0
-
-		#collections...
-		#list of arguments (which have their IDs searchable by .find())
-		self.args = Items()
-		self.methods = Items()
-		#control items (buttons etc)
-		self.controls = {}
-		#all the items		
-		self.items = []
-		#init button
-		self.init = wx.Button(self.parent, -1, 'Init')
-		self.controls[str(self.init.GetId())] = self.init	
+		#make an init button
+		self.init = self.makeButton('Init')
 
 		#if this thing has a parent we need a 'return button'
 		if self.parent:
-			self.done = wx.Button(self.parent, -1, 'Return')
-			self.controls[str(self.done.GetId())] = self.done
+			self.rtrn = self.makeButton('Return')
 
-		#construct the args now
+		#get args and their default values
+		self.readArgs(self.target.__init__)
+
+		#construct the args
 		self.constructArgs()	
+
+		self.methods = Items() #ItemList of methods
 
 		#and then the methods
 		for f in inspect.getmembers(self.target):
@@ -70,11 +49,26 @@ class ClassItem(CMGrid):
 				pass
 			else:
 				item = f[1]
-				item = MethWidget(item)  #hehehe
+				item = MethItem(item)  #hehehe
+				self.buttons.append(item.btn)
 				self.methods.append(item)
 
 
-	def Return(self):
-		pass
-
+	def initialize(self):
+		self.run()
+		for b in self.buttons:
+			b.Enable()
+		
+	def rtrn(self):
+		#return a class instance 
+		s = self.parent.Parent.GetSizer()
+		s.init.Enable()
+		#self obj is the value of the initialized thing
+		s.setDefault(self.obj, self.name)
+		s.Clear(1)
+		s.construct()				
+		self.parent.Parent.Layout()
+		s.initialize()
+		self.parent.Destroy()	
+		
 	
