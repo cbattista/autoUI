@@ -12,11 +12,12 @@ You should have received a copy of the GNU General Public License along with thi
 
 import wx
 import layouts
-from values import *
 from uicfg import *
 from wxmacros import *
-from arguments import *
+
 from items import *
+from classes import *
+from arguments import *
 
 class MethItem(CMGrid):
 	"""Yeah I have to admit here that I could just as easily be calling 

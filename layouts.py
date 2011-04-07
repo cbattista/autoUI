@@ -35,7 +35,6 @@ def LayoutGrid(sizer, posFunc="GoldenRatio"):
 	for r in range(0, rows):
 		for c in range(0, cols):
 			item = sizer.items[index] 
-			print item, [r,c]
 			if item:
 				sizer.Add(item, [r,c])
 			index+=1
