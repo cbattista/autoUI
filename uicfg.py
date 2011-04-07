@@ -24,5 +24,5 @@ values['dict'] = "ReadDict(items)"
 values['NoneType'] = "ReadCode(items[0])"
 values['instance'] = "ReadClassItems(items[0], items[1])"
 
-events['Initialize'] = "self.initialize()"
+events['Initialize'] = "self.run()"
 events['Return'] = "self.Return()"
