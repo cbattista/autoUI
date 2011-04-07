@@ -27,3 +27,4 @@ class TestObj:
 
 	def __privateFunc(self, privateArg = 6):
 		pass
+

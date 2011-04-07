@@ -17,39 +17,12 @@ from uicfg import *
 from wxmacros import *
 from arguments import *
 
-class Methods:
-	def __init__(self, methods = [], parent=None):
-		self.methods = methods
-
-	def append(self, method):
-		self.methods.append(method)
-
-	def names(self):
-		names = []
-		for m in self.methods:
-			self.methods.append(m.name)
-		return names
-
-	def index(self, method):
-		index = -1
-		for m in self.methods:
-			index += 1
-			if name == m.name:
-				return index
-
-		return index
-
-class MethWidget(wx.GridBagSizer):
+class MethWidget(CMGrid):
 	"""Yeah I have to admit here that I could just as easily be calling 
 	this "MethodWidget" but I think using the word "Meth" is funny
 	"""
-	
 	def __init__(self, name, method, parent=None, *args, **kwargs):
-		wx.GridBagSizer.__init__(self, *args, **kwargs)
-		self.method = method
-		self.parent = parent
-		self.name = name
-
+		ItemGrid.__init__(self, name, method, parent, *args, **kwargs)
 		
 	def construct(self):
 		"""make the widgets for the args
@@ -58,13 +31,13 @@ class MethWidget(wx.GridBagSizer):
 
 		#collections
 		self.items = []
-		self.construct()
-		self.args = Arguments()
+		self.args = Items()
 		self.controls = {}
 
-		run = wx.Button(self.parent, -1, self.name).Disable()
-		self.items.append(run)
-		self.controls[str(run.GetId())] = run
+		#make the button
+		self.makeButton(self.name)	
+		#disable it (it's the last thing we put in self.items)
+		self.items[-1].Disable()
 
 		#widgets...
 		#create the arguments
@@ -73,17 +46,5 @@ class MethWidget(wx.GridBagSizer):
 			self.args.append(item)
 			self.items.append(item)
 
-		self.items.append(self.init)	
-
-	def layout():
-		"""layout the items in the sizer"""
-		layouts.LayoutGrid(self)
-
-	def setDefault(self, value, arg):
-		"""sets a default value for a given arg"""
-		index = self.args.index(arg)
-		defaults = list(self.defaults)
-		defaults[index] = value
-		defaults = tuple(defaults)
-		self.defaults = defaults
+		self.items.append(self.init)
 	

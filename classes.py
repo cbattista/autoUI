@@ -16,20 +16,15 @@ from values import *
 from uicfg import *
 from wxmacros import *
 
-class ClassWidget(wx.GridBagSizer):
+class ClassWidget(CMGrid):
 	def __init__(self, target, parent=None, *args, **kwargs):
-		wx.GridBagSizer.__init__(self, *args, **kwargs)
-		
-		self.parent = parent
-		self.target = target
-
-		self.construct()
-
+		CMGrid.__init__(self, "", target, parent, *args, **kwargs)
 
 	def construct(self):
 		"""create the widgets and put them in 
 		the appropriate collection"""
-
+		self.items = []
+		self.controls = {}
 
 		#get args and their default values
 		args = inspect.getargspec(self.target.__init__)
@@ -48,11 +43,10 @@ class ClassWidget(wx.GridBagSizer):
 		else:
 			self.nondefaults = 0
 
-
 		#collections...
 		#list of arguments (which have their IDs searchable by .find())
-		self.args = Arguments()
-		self.methods = Methods()
+		self.args = Items()
+		self.methods = Items()
 		#control items (buttons etc)
 		self.controls = {}
 		#all the items		
@@ -84,25 +78,6 @@ class ClassWidget(wx.GridBagSizer):
 				item = f[1]
 				item = MethWidget(item)  #hehehe
 				self.methods.append(item)
-		
-	def setDefault(self, value, arg):
-		"""sets a default value for a given arg"""
-		index = self.args.index(arg)
-		defaults = list(self.defaults)
-		defaults[index] = value
-		defaults = tuple(defaults)
-		self.defaults = defaults
-
-	def layout(self):
-		"""layout the items in the sizer"""
-		layouts.LayoutGrid(self)
-
-	def onButton(self, event):
-		ID = event.GetId()
-		if self.controls.has_key(str(ID)):
-			btn = self.controls[str(ID)]
-			label = btn.GetLabel()
-			exec(events[label])
 
 	def Initialize(self):
 		pass

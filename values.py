@@ -15,26 +15,23 @@ import layouts
 from uicfg import *
 from wxmacros import *
 
-class ValWidget(wx.GridBagSizer):
+class ValWidget(ItemGrid):
 	def __init__(self, value, parent = None, *args, **kwargs):
 		"""value = the value to be displayed/ctrl
 		parent = the class that this value belongs to
 		"""
-		wx.GridBagSizer.__init__(self, *args, **kwargs)
+		ItemGrid.__init__(self, "", value, parent, *args, **kwargs)
 		
-		self.value = value
-		self.parent = parent
-
-		self.construct()
-		self.controls = {}
-
 	def addControl(self, ctrl)
 		"""create a text ctrl, add it to children"""
 		self.controls[str(ctrl.GetId())] = ctrl
 
 	def construct(self):
+		self.items = []
+		self.controls = {}
+
 		"""construct the widget with components indicated in the components table"""
-		valtype = str(type(self.value)).split("'")[1]
+		valtype = str(type(self.item)).split("'")[1]
 
 		if constructors.has_key(valtype):
 			components = constructors[valtype]
@@ -45,20 +42,16 @@ class ValWidget(wx.GridBagSizer):
 			if c.count("%s"):
 				c = c % self.name
 
-			item = eval(c)
+			i = eval(c)
 
-			if isinstance(item, wx.Control):
-				self.addControl(item)
+			if isinstance(i, wx.Control):
+				self.addControl(i)
 
-			self.items.append(item)	
+			self.items.append(i)	
 		
-	def layout():
-		"""layout the items in the sizer"""
-		layouts.LayoutGrid(self)
-
 	def read(self):
 		"""return the value held in this ValWidget"""
-		value = values[str(type(self.value)).split("'")[1]]
+		value = values[str(type(self.item)).split("'")[1]]
 		value = eval(value)
 		return value
 
