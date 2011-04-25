@@ -43,7 +43,7 @@ class ArgItem(Item):
 	def read(self):
 		"""return the name and value of this argument"""
 		value = self.value.read()
-		return self.name, value
+		return value
 
 	def edit(self):
 		frame = wx.Frame(self.parent, -1)
