@@ -14,9 +14,13 @@ def GoldenRatio(items):
 	numitems = len(items)
 
 	#get the ratio of the golden ratio 
-	c = numitems / 1.61803399
-	c = int(c)
-	r = numitems / c
+	if numitems != 1:
+		c = numitems / 1.61803399
+		c = int(c)
+		r = numitems / c
+	else:
+		r = 1
+		c = 1
 	return r, c
 
 def Bar(items):
@@ -25,8 +29,8 @@ def Bar(items):
 def Pole(items):
 	return len(items), 1
 
-def LayoutGrid(sizer, posFunc="GoldenRatio"):
-	rows, cols = eval("%s(sizer.items)" % posFunc)
+def LayoutGrid(sizer, items, posFunc="GoldenRatio"):
+	rows, cols = eval("%s(items)" % posFunc)
 
 	sizer.SetRows(rows)
 	sizer.SetCols(cols)
@@ -34,7 +38,7 @@ def LayoutGrid(sizer, posFunc="GoldenRatio"):
 	index = 0
 	for r in range(0, rows):
 		for c in range(0, cols):
-			item = sizer.items[index] 
+			item = items[index] 
 			if item:
 				sizer.Add(item, [r,c])
 			index+=1

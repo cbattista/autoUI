@@ -1,3 +1,4 @@
+
 """
 autoUI by Christian Battista
 
@@ -14,14 +15,15 @@ import wx
 import layouts
 from uicfg import *
 from wxmacros import *
+
 from items import *
 
-class ValItem(ItemGrid):
+class ValItem(Item):
 	def __init__(self, value, parent = None, *args, **kwargs):
 		"""value = the value to be displayed/ctrl
 		parent = the class that this value belongs to
 		"""
-		ItemGrid.__init__(self, "", value, parent, *args, **kwargs)
+		Item.__init__(self, "", value, parent, *args, **kwargs)
 		
 	def construct(self):
 		self.items = []
@@ -38,7 +40,6 @@ class ValItem(ItemGrid):
 		for c in components:
 			if c.count("%s"):
 				c = c % self.name
-
 			i = eval(c)
 
 			if isinstance(i, wx.Control):
@@ -50,11 +51,9 @@ class ValItem(ItemGrid):
 			self.bind(wx.EVT_BUTTON, self.onButton)
 
 		self.layout()
-				
 		
 	def read(self):
 		"""return the value held in this ValItem"""
-		value = values[self.valtype]
-		value = eval(value)
-		return value
+		#yes this line is actually needed
+		return self.item
 

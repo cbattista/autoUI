@@ -18,9 +18,9 @@ from items import *
 from arguments import *
 from values import *
 
-class CMGrid(ItemGrid):
+class CMGrid(Item):
 	def __init__(self, name, value, parent=None, *args, **kwargs):
-		ItemGrid.__init__(self, name, value, parent, *args, **kwargs)
+		Item.__init__(self, name, value, parent, *args, **kwargs)
 		self.argnames = []
 		self.defaults = ()
 

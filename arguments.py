@@ -12,37 +12,38 @@ You should have received a copy of the GNU General Public License along with thi
 
 import wx
 import layouts
-from items import *
-from values import *
 from uicfg import *
 from wxmacros import *
 
+from items import *
+from values import *
 
 
-class ArgItem(ItemGrid):
+
+class ArgItem(Item):
 	def __init__(self, name, value, parent = None, *args, **kwargs):
 		"""name = name of the argument
 		value = value, if any (otherwise None)
 		parent = the class that this arg belongs to
 		"""
-		ItemGrid.__init__(self, name, value, parent, *args, **kwargs)
+		Item.__init__(self, name, value, parent, *args, **kwargs)
 
 	def construct(self):
 		self.items = []
 		self.controls = {}
 		"""build argwidget contents"""
 		self.makeLabel(self.name)
-		val_item = ValItem(self.parent, self.item)
+		val_item = ValItem(self.item, self)
 		self.value = val_item
 		self.items.append(val_item)
 		self.controls = dict(self.controls, **val_item.controls)
 		self.layout()
-		self.panel.Bind(wx.EVT_BUTTON, self.onButton)
+		self.Bind(wx.EVT_BUTTON, self.onButton)
 		
 	def read(self):
 		"""return the name and value of this argument"""
 		value = self.value.read()
-		return name, value
+		return self.name, value
 
 	def edit(self):
 		frame = wx.Frame(self.parent, -1)

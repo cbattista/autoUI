@@ -33,29 +33,40 @@ class Items:
 				return index
 		return index
 
-class ItemGrid(wx.GridBagSizer):
+class Item(wx.Window):
 	"""Master class for all widgets"""
 
 	def __init__(self, name, item, parent=None, *args, **kwargs):
-		wx.GridBagSizer.__init__(self, *args, **kwargs)
+
+		if parent:
+			wx.Window.__init__(self, parent, -1)
+		else:
+			try:
+				wx.Window.__init__(self, wx.Frame(None, -1), -1)
+			except:
+				self.app = wx.App(None)
+				wx.Window.__init__(self, wx.Frame(None, -1), -1)
+
+		self.sizer = wx.GridBagSizer()
+
 		self.name = name
 		self.item = item
 		self.parent = parent
 		
-		self.panel = wx.Panel(parent, -1)
+		#self.panel = wx.Panel(parent, -1)
 		self.construct()
-		self.panel.SetSizerAndFit(self)
+		#self.panel.SetSizerAndFit(self)
 
 	def construct(self):
 		self.items = []
 		self.controls = {}
 
 	def layout(self):
-		r, c = layouts.LayoutGrid(self)
+		r, c = layouts.LayoutGrid(self.sizer, self.items)
 		return r, c
 
 	def bind(self, event, function):
-		self.panel.Bind(event, function)
+		self.Bind(event, function)
 
 	def makeLabel(self, label):
 		txt = wx.StaticText(self.parent, -1, label)
