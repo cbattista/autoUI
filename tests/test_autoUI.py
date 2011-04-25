@@ -9,6 +9,10 @@ sys.path.append(os.path.split(os.getcwd())[0])
 
 import values
 import arguments
+import methods
+
+def testFunc(x=1, y="1"):
+	print x, y	
 
 class TestItems(unittest.TestCase):
 
@@ -21,6 +25,10 @@ class TestItems(unittest.TestCase):
 		hasName = self.arg.name == name
 		hasValue = self.arg.read() == value
 		self.assertTrue(hasName and hasValue)
+
+	def testMethod(self, name="testMethod", method=testFunc, parent=None):
+		self.method = methods.MethItem(name, method, parent)
+		self.assertTrue(self.method.name == name)
 
 class TestCMs(unittest.TestCase):
 	pass

@@ -24,7 +24,7 @@ class MethItem(CMGrid):
 	this "MethodItem" but I think using the word "Meth" is funny
 	"""
 	def __init__(self, name, method, parent=None, *args, **kwargs):
-		ItemGrid.__init__(self, name, method, parent, *args, **kwargs)
+		CMGrid.__init__(self, name, method, parent, *args, **kwargs)
 
 		args = inspect.getargspec(method)
 		self.argnames = args[0]
@@ -48,5 +48,5 @@ class MethItem(CMGrid):
 		self.layout()
 
 	def layout(self):
-		layouts.LayoutGrid("Bar")
+		layouts.LayoutGrid(self.GetSizer(), self.items, "Bar", )
 	

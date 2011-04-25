@@ -35,7 +35,8 @@ class CMGrid(Item):
 	def readArgs(self, function):
 		args = inspect.getargspec(function)
 		self.argnames = args[0]
-		self.argnames.remove('self')
+		if 'self' in self.argnames:
+			self.argnames.remove('self')
 
 		self.defaults = ()
 		self.defaults = args[3]

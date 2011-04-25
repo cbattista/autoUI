@@ -47,22 +47,19 @@ class Item(wx.Window):
 				self.app = wx.App(None)
 				wx.Window.__init__(self, wx.Frame(None, -1), -1)
 
-		self.sizer = wx.GridBagSizer()
-
 		self.name = name
 		self.item = item
 		self.parent = parent
 		
-		#self.panel = wx.Panel(parent, -1)
+		self.SetSizer(wx.GridBagSizer())
 		self.construct()
-		#self.panel.SetSizerAndFit(self)
 
 	def construct(self):
 		self.items = []
 		self.controls = {}
 
 	def layout(self):
-		r, c = layouts.LayoutGrid(self.sizer, self.items)
+		r, c = layouts.LayoutGrid(self.GetSizer(), self.items)
 		return r, c
 
 	def bind(self, event, function):
