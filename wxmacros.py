@@ -13,6 +13,18 @@ You should have received a copy of the GNU General Public License along with thi
 import wx
 import values
 
+class FloatCtrl(wx.TextCtrl):
+	"""extension of TextCtrl object to process floating point numbers"""
+	def __init__(self, parent, value, *args, **kwargs):
+		wx.TextCtrl.__init__(self, parent, *args, **kwargs)
+		self.SetFloat(value)
+
+	def SetFloat(self, value):
+		self.SetValue(str(value))
+
+	def GetFloat(self):
+		return float(self.GetValue())
+
 def ClassItems(value):
 	"""code constructor for a class/instance"""
 	if str(type(value)) == "<type 'instance'>":
@@ -54,6 +66,8 @@ def ListItems(the_list):
 		items.append(item)
 
 	items.append("wx.Button(self.parent, -1, 'List Edit')")
+
+	return items
 
 def ReadList(items):
 	values = []

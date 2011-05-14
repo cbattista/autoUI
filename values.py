@@ -39,8 +39,16 @@ class ValItem(Item):
 
 		for c in components:
 			if c.count("%s"):
-				c = c % self.name
-			i = eval(c)
+				c = c % self.read()
+				print c
+			else:
+				print "wong"
+
+			try:
+				i = eval(c)
+			except:
+				print "%s" % c
+				i = eval(c)
 
 			if isinstance(i, wx.Control):
 				self.addControl(i)

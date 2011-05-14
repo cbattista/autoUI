@@ -1,10 +1,9 @@
 #uicfg.py
-
 constructors = {}
-constructors['str'] = ["wx.TextCtrl(self, -1, %s)"]
-constructors['int'] = ["wx.SpinCtrl(self, -1, str(%s))"]
-constructors['float'] = ["wx.FloatCtrl(self, -1, %s)"]
-constructors['list'] = ["ListItems(self, %s)"]
+constructors['str'] = ["wx.TextCtrl(self, -1, '%s')"]
+constructors['int'] = ["wx.SpinCtrl(self, -1, initial=%s)"]
+constructors['float'] = ["FloatCtrl(self, -1, %s)"]
+constructors['list'] = ["ListItems(%s)"]
 constructors['bool'] = ["wx.Checkbox(self, -1).SetValue(%s)" ]
 constructors['dict'] = ["DictItems(self, %s)"]
 

@@ -10,6 +10,20 @@ sys.path.append(os.path.split(os.getcwd())[0])
 import values
 import arguments
 import methods
+import classes
+
+class testObj:
+	def __init__(self, a=1, b=2.0, c="3", d=[5,6,7]): #, e={'eight': 8, 'nine':9.0, 'ten':'ten', 'eleven': [1,1]}):
+		self.a = a
+		self.b = b
+		self.c = c
+		self.d = d
+		#self.e = e
+
+	def printVals(self):
+		print self.a, self.b, self.c
+		print self.d
+		print self.e
 
 def testFunc(x=1, y="1"):
 	print x, y	
@@ -29,6 +43,10 @@ class TestItems(unittest.TestCase):
 	def testMethod(self, name="testMethod", method=testFunc, parent=None):
 		self.method = methods.MethItem(name, method, parent)
 		self.assertTrue(self.method.name == name)
+
+	def testClass(self, Class=testObj):
+		self.Class = classes.ClassItem(Class, parent=None)
+		self.assertTrue(len(self.items))
 
 class TestCMs(unittest.TestCase):
 	pass
